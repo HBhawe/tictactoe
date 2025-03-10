@@ -1,0 +1,30 @@
+@font-face {
+  font-family: Monospaced;
+  src: url(./fonts/JetBrainsMono-VariableFont_wght.ttf);
+}
+
+body {
+  font-family: "Monospaced";
+}
+
+h1,
+h3 {
+  text-align: center;
+}
+
+#container {
+  display: flex;
+  justify-content: center;
+}
+
+.tictactoe {
+  width: 450px;
+  height: 450px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.game-grid {
+  border: 1px solid black;
+}
