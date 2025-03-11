@@ -14,6 +14,10 @@ const winnerPlayer = document.querySelector(".winner-player");
 const player1 = document.querySelector("#player1");
 const player2 = document.querySelector("#player2");
 
+// const submitButton = document.querySelector(".submit-button");
+const formSubmit = document.querySelector(".players");
+const submitButton = document.querySelector(".submit-button");
+
 // EVENT LISTENERS
 
 player1.addEventListener("change", (e) => {
@@ -63,8 +67,8 @@ const gameBoard = (function () {
     currentPlayerHeading.innerText = `${players.currentPlayer}`;
   };
 
-  const onLoadRender = function () {
-    currentPlayerHeading.innerText = "player1";
+  const onLoadRender = function (player1) {
+    currentPlayerHeading.innerText = `${player1}`;
     winnerPlayer.innerText = "";
   };
 
@@ -139,9 +143,21 @@ const players = (function () {
   const player1Marker = "X";
   const player2Marker = "O";
   let currentPlayer = "player1";
+  let player1, player2;
 
-  return { player1Marker, player2Marker, currentPlayer };
+  return { player1Marker, player2Marker, currentPlayer, player1, player2 };
 })();
 
 // event listener to set player1 up when starting
-body.addEventListener("load", gameBoard.onLoadRender());
+// body.addEventListener("load", gameBoard.onLoadRender());
+
+formSubmit.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const formData = new FormData(formSubmit, submitButton);
+  const playerObject = {};
+  for (const [key, value] of formData) {
+    playerObject[key] = value;
+  }
+  console.log(playerObject);
+  gameBoard.onLoadRender(playerObject.player1);
+});
