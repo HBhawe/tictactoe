@@ -1,4 +1,8 @@
-// REMAINING - refactor code to work with user submitted player names
+/*
+TO-DO
+1. refactor code to work with user-submitted player names
+2. tie games
+*/
 
 // QUERY SELECTORS
 const gameGrid = document.querySelectorAll(".game-grid");
