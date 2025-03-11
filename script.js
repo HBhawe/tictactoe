@@ -1,3 +1,5 @@
+// REMAINING - refactor code to work with user submitted player names
+
 // QUERY SELECTORS
 const gameGrid = document.querySelectorAll(".game-grid");
 const currentPlayerHeading = document.querySelector(".current-player");
@@ -5,7 +7,14 @@ const body = document.querySelector("body");
 const reloadButton = document.querySelector(".reload-button");
 const winnerPlayer = document.querySelector(".winner-player");
 
+const player1 = document.querySelector("#player1");
+const player2 = document.querySelector("#player2");
+
 // EVENT LISTENERS
+
+player1.addEventListener("change", (e) => {
+  players.currentPlayer = player1.value;
+});
 
 // event listener for click events on the grid
 gameGrid.forEach((grid) =>
@@ -68,9 +77,12 @@ const gameBoard = (function () {
   };
 
   const checkWinner = function () {
-    checkWinnerRows();
-    checkWinnerColumns();
-    checkWinnerDiagonals();
+    let winnerRows = checkWinnerRows();
+    let winnerColumns = checkWinnerColumns();
+    let winnerDiagonals = checkWinnerDiagonals();
+    // if (!winnerRows && !winnerColumns && !winnerDiagonals) {
+    //   winnerPlayer.innerText = `Tie! Please reload and start again!`;
+    // }
   };
 
   const checkWinnerRows = function () {
@@ -86,7 +98,7 @@ const gameBoard = (function () {
       let marker = gameState[6];
       let winner = marker === "X" ? "Player 1" : "Player 2";
       winnerPlayer.innerText = `${winner} wins!`;
-    }
+    } else return 0;
   };
   const checkWinnerColumns = function () {
     if (gameState[0] === gameState[3] && gameState[0] === gameState[6]) {
@@ -101,7 +113,7 @@ const gameBoard = (function () {
       let marker = gameState[2];
       let winner = marker === "X" ? "Player 1" : "Player 2";
       winnerPlayer.innerText = `${winner} wins!`;
-    }
+    } else return 0;
   };
   const checkWinnerDiagonals = function () {
     if (gameState[0] === gameState[4] && gameState[0] === gameState[8]) {
@@ -112,7 +124,7 @@ const gameBoard = (function () {
       let marker = gameState[2];
       let winner = marker === "X" ? "Player 1" : "Player 2";
       winnerPlayer.innerText = `${winner} wins!`;
-    }
+    } else return 0;
   };
 
   return { gameState, makeMove, onLoadRender, reloadGame };

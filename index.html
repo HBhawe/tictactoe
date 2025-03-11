@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -9,7 +9,19 @@
   <body>
     <h1>TIC TAC TOE</h1>
     <h3>A mini-project by Harshal Bhawe</h3>
-    <h4 class="current-player"></h3>
+    <h4 class="current-player"></h4>
+    <div class="players-container">
+      <div class="players">
+        <div>
+          <label for="player1">Player 1:</label>
+          <input type="text" id="player1" />
+        </div>
+        <div>
+          <label for="player2">Player 2:</label>
+          <input type="text" id="player2" />
+        </div>
+      </div>
+    </div>
     <div id="container">
       <div class="tictactoe">
         <div class="game-grid" data-id="0"></div>
@@ -26,7 +38,11 @@
     <div class="winner">
       <h4 class="winner-player"></h4>
     </div>
-    <div class="button-div"><button type="button" class="reload-button"><img src="./img/reload-svgrepo-com.svg" alt="">Reload</button></div>
+    <div class="button-div">
+      <button type="button" class="reload-button">
+        <img src="./img/reload-svgrepo-com.svg" alt="" />Reload
+      </button>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>
