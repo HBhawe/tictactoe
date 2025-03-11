@@ -3,12 +3,14 @@
   src: url(./fonts/JetBrainsMono-VariableFont_wght.ttf);
 }
 
-body {
+body,
+button {
   font-family: "Monospaced";
 }
 
 h1,
-h3 {
+h3,
+h4 {
   text-align: center;
 }
 
@@ -23,8 +25,38 @@ h3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
+  border: 1px solid black;
 }
 
 .game-grid {
   border: 1px solid black;
+  text-align: center;
+  font-size: 100px;
+}
+
+.button-div {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+button {
+  width: 150px;
+  height: 30px;
+  padding: 0;
+  margin: 0;
+}
+
+img {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+.reload-button {
+  display: flex;
+  /* text-align: center; */
+  justify-content: space-evenly;
+  align-items: center;
 }
