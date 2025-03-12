@@ -9,6 +9,10 @@ input {
   font-family: "Monospaced";
 }
 
+.hidden {
+  display: none;
+}
+
 h1,
 h3,
 h4 {
@@ -61,14 +65,6 @@ img {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-}
-
-.players {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: repeat(3, 1fr);
-  gap: 5px;
-  padding: 5px;
 }
 
 .players-container {

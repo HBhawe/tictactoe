@@ -70,6 +70,8 @@ const gameBoard = (function () {
   const onLoadRender = function (player1) {
     currentPlayerHeading.innerText = `${player1}`;
     winnerPlayer.innerText = "";
+    formSubmit.reset();
+    formSubmit.classList.add("hidden");
   };
 
   const reloadGame = function () {
