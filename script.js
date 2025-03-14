@@ -50,20 +50,11 @@ const gameBoard = (function () {
   };
 
   const checkWinner = function () {
-    let winnerRows = checkWinnerRows();
-    let winnerColumns = checkWinnerColumns();
-    let winnerDiagonals = checkWinnerDiagonals();
-    if (
-      !winnerColumns &&
-      !winnerRows &&
-      !winnerDiagonals &&
-      players.playerArray.length > 7
-    ) {
-      winnerPlayer.innerText = `Draw`;
-    }
+    let winner = checkWinnerCombinations();
+    console.log(winner);
   };
 
-  const checkWinnerRows = function () {
+  const checkWinnerCombinations = function () {
     if (gameState[0] === gameState[1] && gameState[0] === gameState[2]) {
       let marker = gameState[0];
       let winner = marker === "X" ? "player1" : "player2";
@@ -76,10 +67,7 @@ const gameBoard = (function () {
       let marker = gameState[6];
       let winner = marker === "X" ? "player1" : "player2";
       winnerPlayer.innerText = `${players.playerObject[winner]} wins!`;
-    } else return 0;
-  };
-  const checkWinnerColumns = function () {
-    if (gameState[0] === gameState[3] && gameState[0] === gameState[6]) {
+    } else if (gameState[0] === gameState[3] && gameState[0] === gameState[6]) {
       let marker = gameState[0];
       let winner = marker === "X" ? "player1" : "player2";
       winnerPlayer.innerText = `${players.playerObject[winner]} wins!`;
@@ -91,18 +79,17 @@ const gameBoard = (function () {
       let marker = gameState[2];
       let winner = marker === "X" ? "player1" : "player2";
       winnerPlayer.innerText = `${players.playerObject[winner]} wins!`;
-    } else return 0;
-  };
-  const checkWinnerDiagonals = function () {
-    if (gameState[0] === gameState[4] && gameState[0] === gameState[8]) {
-      let marker = gameState[0];
-      let winner = marker === "X" ? "player1" : "player2";
-      winnerPlayer.innerText = `${players.playerObject[winner]} wins!`;
     } else if (gameState[2] === gameState[4] && gameState[2] === gameState[6]) {
       let marker = gameState[2];
       let winner = marker === "X" ? "player1" : "player2";
       winnerPlayer.innerText = `${players.playerObject[winner]} wins!`;
-    } else return 0;
+    } else if (gameState[0] === gameState[4] && gameState[0] === gameState[8]) {
+      let marker = gameState[0];
+      let winner = marker === "X" ? "player1" : "player2";
+      winnerPlayer.innerText = `${players.playerObject[winner]} wins!`;
+    } else if (players.playerArray.length === 10) {
+      winnerPlayer.innerText = `Draw!`;
+    }
   };
 
   return { gameState, makeMove, onLoadRender, reloadGame };
@@ -162,6 +149,10 @@ formSubmit.addEventListener("submit", (e) => {
   for (const [key, value] of formData) {
     playerObject[key] = value;
     players.playerObject[key] = value;
+  }
+  if (players.playerObject.player1 === players.playerObject.player2) {
+    alert("Same player names not allowed");
+    gameBoard.reloadGame();
   }
   let player1 = players.playerObject.player1;
   players.playerArray.push(player1);
