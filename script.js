@@ -147,8 +147,8 @@ formSubmit.addEventListener("submit", (e) => {
   const formData = new FormData(formSubmit, submitButton);
   const playerObject = {};
   for (const [key, value] of formData) {
-    playerObject[key] = value;
-    players.playerObject[key] = value;
+    playerObject[key] = value.toLowerCase();
+    players.playerObject[key] = value.toLowerCase();
   }
   if (players.playerObject.player1 === players.playerObject.player2) {
     alert("Same player names not allowed");
