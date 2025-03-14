@@ -11,6 +11,7 @@ input {
 
 .hidden {
   display: none;
+  visibility: hidden;
 }
 
 h1,
@@ -76,4 +77,11 @@ img {
 .button-submit {
   display: flex;
   justify-content: flex-end;
+}
+
+.form-fields {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 5px;
+  margin: 0;
 }

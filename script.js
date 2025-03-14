@@ -1,37 +1,37 @@
 /*
 TO-DO
-1. refactor code to work with user-submitted player names
+1. refactor code to work with user-submitted player names and symbols
 2. tie games
 */
 
 // QUERY SELECTORS
+"use strict";
+
 const gameGrid = document.querySelectorAll(".game-grid");
 const currentPlayerHeading = document.querySelector(".current-player");
 const body = document.querySelector("body");
 const reloadButton = document.querySelector(".reload-button");
 const winnerPlayer = document.querySelector(".winner-player");
-
-const player1 = document.querySelector("#player1");
-const player2 = document.querySelector("#player2");
-
-// const submitButton = document.querySelector(".submit-button");
 const formSubmit = document.querySelector(".players");
 const submitButton = document.querySelector(".submit-button");
+const container = document.querySelector("#container");
 
 // EVENT LISTENERS
-
-player1.addEventListener("change", (e) => {
-  players.currentPlayer = player1.value;
-});
+// hide the grid until the form is submitted
+body.addEventListener("DOMContentLoaded", container.classList.add("hidden"));
 
 // event listener for click events on the grid
 gameGrid.forEach((grid) =>
   grid.addEventListener("click", (e) => {
     let player = players.currentPlayer;
-    let currentMarker = players[`${player}Marker`];
+    let currentPlayerName = players.playerObject[player];
+    // console.log(currentPlayerName);
+    let currentMarker = players.playerObject[`${player}symbol`];
     let positon = e.target.dataset.id;
+    console.log(players.playerArray);
     if (!e.target.innerText) {
       players.currentPlayer = player === "player1" ? "player2" : "player1";
+      players.playerArray.push(players.playerObject[players.currentPlayer]);
       gameBoard.makeMove(e, currentMarker, positon);
     }
   })
@@ -64,7 +64,7 @@ const gameBoard = (function () {
   //   private method
   const renderBoard = function (event, marker) {
     event.target.insertAdjacentText("beforeend", marker);
-    currentPlayerHeading.innerText = `${players.currentPlayer}`;
+    currentPlayerHeading.innerText = `${players.playerArray[players.playerArray.length - 1]}`;
   };
 
   const onLoadRender = function (player1) {
@@ -75,65 +75,62 @@ const gameBoard = (function () {
   };
 
   const reloadGame = function () {
-    // gameState.splice(0, gameState.length);
-    for (let index = 0; index < gameState.length; index++) {
-      gameState[index] = Math.random();
-    }
-
-    gameGrid.forEach((grid) => {
-      grid.innerText = "";
-    });
-    onLoadRender();
+    window.location.reload();
   };
 
   const checkWinner = function () {
     let winnerRows = checkWinnerRows();
     let winnerColumns = checkWinnerColumns();
     let winnerDiagonals = checkWinnerDiagonals();
-    // if (!winnerRows && !winnerColumns && !winnerDiagonals) {
-    //   winnerPlayer.innerText = `Tie! Please reload and start again!`;
-    // }
+    if (
+      !winnerColumns &&
+      !winnerRows &&
+      !winnerDiagonals &&
+      players.playerArray.length > 7
+    ) {
+      winnerPlayer.innerText = `Draw`;
+    }
   };
 
   const checkWinnerRows = function () {
     if (gameState[0] === gameState[1] && gameState[0] === gameState[2]) {
       let marker = gameState[0];
-      let winner = marker === "X" ? "Player 1" : "Player 2";
-      winnerPlayer.innerText = `${winner} wins!`;
+      let winner = marker === "X" ? "player1" : "player2";
+      winnerPlayer.innerText = `${players.playerObject[winner]} wins!`;
     } else if (gameState[3] === gameState[4] && gameState[3] === gameState[5]) {
       let marker = gameState[3];
-      let winner = marker === "X" ? "Player 1" : "Player 2";
-      winnerPlayer.innerText = `${winner} wins!`;
+      let winner = marker === "X" ? "player1" : "player2";
+      winnerPlayer.innerText = `${players.playerObject[winner]} wins!`;
     } else if (gameState[6] === gameState[7] && gameState[6] === gameState[8]) {
       let marker = gameState[6];
-      let winner = marker === "X" ? "Player 1" : "Player 2";
-      winnerPlayer.innerText = `${winner} wins!`;
+      let winner = marker === "X" ? "player1" : "player2";
+      winnerPlayer.innerText = `${players.playerObject[winner]} wins!`;
     } else return 0;
   };
   const checkWinnerColumns = function () {
     if (gameState[0] === gameState[3] && gameState[0] === gameState[6]) {
       let marker = gameState[0];
-      let winner = marker === "X" ? "Player 1" : "Player 2";
-      winnerPlayer.innerText = `${winner} wins!`;
+      let winner = marker === "X" ? "player1" : "player2";
+      winnerPlayer.innerText = `${players.playerObject[winner]} wins!`;
     } else if (gameState[1] === gameState[4] && gameState[1] === gameState[7]) {
       let marker = gameState[1];
-      let winner = marker === "X" ? "Player 1" : "Player 2";
-      winnerPlayer.innerText = `${winner} wins!`;
+      let winner = marker === "X" ? "player1" : "player2";
+      winnerPlayer.innerText = `${players.playerObject[winner]} wins!`;
     } else if (gameState[2] === gameState[5] && gameState[2] === gameState[8]) {
       let marker = gameState[2];
-      let winner = marker === "X" ? "Player 1" : "Player 2";
-      winnerPlayer.innerText = `${winner} wins!`;
+      let winner = marker === "X" ? "player1" : "player2";
+      winnerPlayer.innerText = `${players.playerObject[winner]} wins!`;
     } else return 0;
   };
   const checkWinnerDiagonals = function () {
     if (gameState[0] === gameState[4] && gameState[0] === gameState[8]) {
       let marker = gameState[0];
-      let winner = marker === "X" ? "Player 1" : "Player 2";
-      winnerPlayer.innerText = `${winner} wins!`;
+      let winner = marker === "X" ? "player1" : "player2";
+      winnerPlayer.innerText = `${players.playerObject[winner]} wins!`;
     } else if (gameState[2] === gameState[4] && gameState[2] === gameState[6]) {
       let marker = gameState[2];
-      let winner = marker === "X" ? "Player 1" : "Player 2";
-      winnerPlayer.innerText = `${winner} wins!`;
+      let winner = marker === "X" ? "player1" : "player2";
+      winnerPlayer.innerText = `${players.playerObject[winner]} wins!`;
     } else return 0;
   };
 
@@ -142,16 +139,13 @@ const gameBoard = (function () {
 
 // PLAYER IIFE
 const players = (function () {
-  const player1Marker = "X";
-  const player2Marker = "O";
+  const playerObject = new Object();
+  playerObject.player1symbol = "X";
+  playerObject.player2symbol = "O";
+  const playerArray = new Array();
   let currentPlayer = "player1";
-  let player1, player2;
-
-  return { player1Marker, player2Marker, currentPlayer, player1, player2 };
+  return { playerObject, playerArray, currentPlayer };
 })();
-
-// event listener to set player1 up when starting
-// body.addEventListener("load", gameBoard.onLoadRender());
 
 formSubmit.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -159,7 +153,10 @@ formSubmit.addEventListener("submit", (e) => {
   const playerObject = {};
   for (const [key, value] of formData) {
     playerObject[key] = value;
+    players.playerObject[key] = value;
   }
-  console.log(playerObject);
-  gameBoard.onLoadRender(playerObject.player1);
+  let player1 = players.playerObject.player1;
+  players.playerArray.push(player1);
+  container.classList.remove("hidden");
+  gameBoard.onLoadRender(player1);
 });
